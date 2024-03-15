@@ -28,7 +28,7 @@
                             <input id="email" type="email" class="form-control" name="email" value="{{ old('email', auth()->user()->email) }}" required>
                         </div>
 
-                        <!-- Voeg andere profielvelden toe die je wilt bewerken -->
+                    
 
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary">
