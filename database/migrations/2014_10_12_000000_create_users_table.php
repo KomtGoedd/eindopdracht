@@ -33,4 +33,12 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('users');
     }
+
+    public function run()
+    {
+        $this->call([
+            UserSeeder::class,
+            ProfileSeeder::class,
+        ]);
+    }
 }

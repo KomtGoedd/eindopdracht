@@ -8,14 +8,15 @@ class ProfileController extends Controller
 {
     public function edit()
     {
-        return view('profile.edit');
+        $user = auth()->user();
+        return view('profile.edit', compact('user'));
     }
 
     public function update(Request $request)
-    {
-        $user = auth()->user();
-        $user->update($request->all());
+{
+    $user = auth()->user();
+    $user->update($request->all());
 
-        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
-    }
+    return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
+}
 }
