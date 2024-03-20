@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRidesTable extends Migration
+class AddMeldingToRidesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +13,8 @@ class CreateRidesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rides', function (Blueprint $table) {
-            $table->id();
-            $table->string('Naam');
-            $table->string('status');
-            $table->timestamps();
+        Schema::table('rides', function (Blueprint $table) {
+            $table->string('melding')->nullable();
         });
     }
 
@@ -27,6 +25,8 @@ class CreateRidesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rides');
+        Schema::table('rides', function (Blueprint $table) {
+            $table->dropColumn('melding');
+        });
     }
 }

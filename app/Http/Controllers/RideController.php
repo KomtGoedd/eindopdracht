@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ride;
+use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class RideController extends Controller
 {
     public function index()
     {
         $rides = Ride::all();
-        return view('dashboard', compact('rides'));
+        return view('rides.index', compact('rides'));
     }
+
 }

@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RideController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,27 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/dashboard', function () {
+        if (auth()->user()->role === 'admin') {
+            return redirect('/admin/dashboard');
+        } else {
+            return view('dashboard');
+        }
+    })->middleware('verified')->name('dashboard');
+    
+    Route::get('/admin/dashboard', function () {
+        if (auth()->user()->role !== 'admin') {
+            return redirect('/dashboard');
+        } else {
+            return view('admin.dashboard');
+        }
+    })->middleware('verified')->name('admin.dashboard');
+
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 
 require __DIR__.'/auth.php';

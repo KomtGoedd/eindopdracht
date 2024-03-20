@@ -11,7 +11,7 @@
                     <h4>Routes van Vandaag:</h4>
                     <ul>
                         @foreach ($rides as $ride)
-                            <li>{{ $ride->name }} - Status: {{ $ride->status }}</li>
+                            <li>{{ $ride->Naam }} - Status: {{ $ride->status }}</li>
                         @endforeach
                     </ul>
                 </div>
