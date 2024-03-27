@@ -1,9 +1,10 @@
-<?php 
+<?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RideController;
-
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,34 +21,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         if (auth()->user()->role === 'admin') {
             return redirect('/admin/dashboard');
         } else {
             return view('dashboard');
         }
-    })->middleware('verified')->name('dashboard');
-    
-    Route::get('/admin/dashboard', function () {
-        if (auth()->user()->role !== 'admin') {
-            return redirect('/dashboard');
-        } else {
-            return view('admin.dashboard');
-        }
-    })->middleware('verified')->name('admin.dashboard');
+    })->name('dashboard');
 
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
 
-
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 require __DIR__.'/auth.php';

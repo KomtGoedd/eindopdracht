@@ -9,6 +9,8 @@
 
                 <div class="card-body">
                     <h1>ADMIN DASH</h1>
+
+                    <h2>Welkom admin, Beheer hier alle ritten</h2>
                 </div>
             </div>
         </div>
